@@ -66,6 +66,35 @@ namespace Web.Data
             }
         }
         #endregion
+
+         #region Configs
+        
+        public Task<List<Configs>> GetConfigsAsync ()
+        {
+            using (var db = new ReminderContext())
+            {
+                return Task.FromResult(db.Configs.ToList());
+            }
+
+        }
+
+        public async void SaveConfigs ( Configs newConfigs )
+        {
+            using (var db = new ReminderContext())
+            {
+                db.Configs.Update(newConfigs);
+              await  db.SaveChangesAsync();
+            }
+        }
+        public async  void DeleteConfigs ( Configs DeletedConfigs )
+        {
+            using (var db = new ReminderContext())
+            {
+                db.Configs.Remove(DeletedConfigs);
+                 await  db.SaveChangesAsync();
+            }
+        }
+        #endregion
     }
 }
 

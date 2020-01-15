@@ -1,0 +1,72 @@
+﻿@page "/confs"
+
+@inject RemindServices RemindServices
+@inject IModalService Modal
+
+
+@if (lesConfigs == null)
+{
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+}
+else
+{
+    
+
+    <button @onclick="@(() => ShowEdit(Actions.New))" class="btn btn-primary"><span class="oi oi-plus"></span></button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Engagement</th>
+                <th>Api</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Config in lesConfigs)
+            {
+            <tr>
+                <td>@Config.Engagement.Code</td>
+                <td>@Config.Engagement.Libelle</td>
+                <td>@Config.Api.Name</td>
+           
+                <td><button @onclick="@(() => ShowEdit(Actions.Edit,Config.ID))" class="btn btn-primary"><i class="oi oi-pencil"></i></button></td>
+                <td><button @onclick="@(() => ShowEdit(Actions.Delete,Config.ID))" class="btn btn-danger"><i class="oi oi-trash"></i></button></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    public  List<Configs> lesConfigs;
+
+    protected override async Task OnInitializedAsync ()
+    {
+        lesConfigs = await RemindServices.GetConfigsAsync();
+    }
+    void ShowEdit(Actions actions,int? ConfigID=null)
+    {
+        var parameters = new ModalParameters();
+        if(ConfigID !=null)parameters.Add("ConfigID", ConfigID);
+        parameters.Add("Action",actions);
+        Modal.Show<ConfsEdit>("Formulaire Config", parameters);
+        Modal.OnClose += RefreshConfigs;
+    }
+
+    void RefreshConfigs(ModalResult modalResult)
+    {
+        if (!modalResult.Cancelled)
+        {
+            lesConfigs= (List<Configs>) modalResult.Data ;
+            this.StateHasChanged();
+        }
+        Modal.OnClose -= RefreshConfigs;
+    }
+}

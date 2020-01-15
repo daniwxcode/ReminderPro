@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Configurations\**" />
+    <Content Remove="Pages\Configurations\**" />
+    <EmbeddedResource Remove="Pages\Configurations\**" />
+    <None Remove="Pages\Configurations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj" />
   </ItemGroup>
 

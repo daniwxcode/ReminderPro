@@ -1,0 +1,128 @@
+﻿@page "/ConfsEdit"
+@inject RemindServices RemindServices
+@inject IModalService ModalService
+
+<div class="card">
+    <div class="card-header">
+        <label class="text-@(IsDisabled?"danger":"default")">@Message </label>
+    </div>
+    <div class="card-body">
+        <div class="form-group">
+            <label>Canal</label>
+            <select class="form-control" @bind="Configs.EngagementID" disabled="@IsDisabled">
+                @if (Engagements != null)
+                {
+                    foreach (var eng in Engagements)
+                    {
+                        <option value="@eng.ID">@($"{eng.Code}- {eng.Libelle}")</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Canal</label>
+            <select class="form-control" @bind="Configs.ApiID" disabled="@IsDisabled">
+                @if (Apis != null)
+                {
+                    foreach (var api in Apis)
+                    {
+                        <option value="@api.ID">@($"{api.Name}")</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Libelle</label>
+            <input @bind="@Configs.Actif" type="checkbox" class="form-control" disabled="@IsDisabled" />
+        </div>
+
+
+        <button @onclick="@ValidateAsync" class="@(IsDisabled?"btn btn-danger":"btn btn-primary")">@valider</button>
+        <button @onclick="@Cancel" class="btn btn-secondary">Annuler</button>
+    </div>
+</div>
+@code {
+
+    [CascadingParameter]
+    ModalParameters Parameters { get; set; }
+    int ConfigsID { get; set; }
+    string valider = "Enregistrer";
+    string Message = "";
+    bool IsDisabled = false;
+    Configs Configs { get; set; }
+    List<Api> Apis;
+    List<Engagement> Engagements;
+
+    protected async override void OnInitialized ()
+    {
+        Apis = await RemindServices.GetApiAsync();
+        Engagements = await RemindServices.GetEngagAsync();
+
+        switch (Parameters.Get<Actions>("Action"))
+        {
+            case Actions.New:
+                {
+                    Configs = new Configs();
+                    Message = "Enregistrer un nouvel Configs";
+                    break;
+                }
+            case Actions.Edit:
+                {
+                    ConfigsID = Parameters.Get<int>("ConfigsID");
+                    Configs = RemindServices.GetConfigsAsync().Result.FirstOrDefault(p => p.ID == ConfigsID);
+                    Message = $"Modification de la Config";
+                    break;
+                }
+            case Actions.Delete:
+                {
+                    ConfigsID = Parameters.Get<int>("ConfigsID");
+                    Configs = RemindServices.GetConfigsAsync().Result.FirstOrDefault(p => p.ID == ConfigsID);
+                    valider = "Supprimer";
+                    Message = " Voulez vous vraiment supprimer cet Configs ";
+                    IsDisabled = true;
+                    break;
+                }
+            default:
+                {
+                    return;
+                }
+        }
+
+    }
+
+
+
+    async void ValidateAsync ()
+    {
+        switch (Parameters.Get<Actions>("Action"))
+        {
+            case Actions.New:
+                {
+                    RemindServices.SaveConfigs(Configs);
+                    break;
+                }
+            case Actions.Edit:
+                {
+                    RemindServices.SaveConfigs(Configs);
+                    break;
+                }
+            case Actions.Delete:
+                {
+                    RemindServices.DeleteConfigs(Configs);
+                    break;
+                }
+            default:
+                {
+                    return;
+                }
+        }
+        var liste = await RemindServices.GetConfigsAsync();
+        ModalService.Close(ModalResult.Ok<List<Configs>>(liste));
+    }
+
+    void Cancel ()
+    {
+        ModalService.Cancel();
+    }
+
+}
