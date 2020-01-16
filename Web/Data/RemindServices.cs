@@ -21,20 +21,20 @@ namespace Web.Data
 
         }
 
-        public async void Save ( Api newApi )
+        public  void Save ( Api newApi )
         {
             using (var db = new ReminderContext())
             {
                 db.Apis.Update(newApi);
-              await  db.SaveChangesAsync();
+                db.SaveChanges();
             }
         }
-        public async  void Delete ( Api DeletedApi )
+        public   void Delete ( Api DeletedApi )
         {
             using (var db = new ReminderContext())
             {
                 db.Apis.Remove(DeletedApi);
-                 await  db.SaveChangesAsync();
+                db.SaveChanges();
             }
         }
         #endregion
@@ -49,20 +49,20 @@ namespace Web.Data
 
         }
 
-        public async void SaveEngag ( Engagement newEngag )
+        public  void SaveEngag ( Engagement newEngag )
         {
             using (var db = new ReminderContext())
             {
                 db.Engagements.Update(newEngag);
-              await  db.SaveChangesAsync();
+                db.SaveChanges();
             }
         }
-        public async  void DeleteEngag ( Engagement DeletedEngag )
+        public  void DeleteEngag ( Engagement DeletedEngag )
         {
             using (var db = new ReminderContext())
             {
                 db.Engagements.Remove(DeletedEngag);
-                 await  db.SaveChangesAsync();
+                 db.SaveChanges();
             }
         }
         #endregion
@@ -73,25 +73,25 @@ namespace Web.Data
         {
             using (var db = new ReminderContext())
             {
-                return Task.FromResult(db.Configs.ToList());
+                return Task.FromResult(db.Configs.Include(p=>p.Engagement).Include(p=>p.Api).ToList());
             }
 
         }
 
-        public async void SaveConfigs ( Configs newConfigs )
+        public void SaveConfigs ( Configs newConfigs )
         {
             using (var db = new ReminderContext())
             {
                 db.Configs.Update(newConfigs);
-              await  db.SaveChangesAsync();
+                db.SaveChanges();
             }
         }
-        public async  void DeleteConfigs ( Configs DeletedConfigs )
+        public  void DeleteConfigs ( Configs DeletedConfigs )
         {
             using (var db = new ReminderContext())
             {
                 db.Configs.Remove(DeletedConfigs);
-                 await  db.SaveChangesAsync();
+                db.SaveChanges();
             }
         }
         #endregion

@@ -54,7 +54,7 @@ else
     void ShowEdit(Actions actions,int? ConfigID=null)
     {
         var parameters = new ModalParameters();
-        if(ConfigID !=null)parameters.Add("ConfigID", ConfigID);
+        if(ConfigID !=null)parameters.Add("ConfigsID", ConfigID);
         parameters.Add("Action",actions);
         Modal.Show<ConfsEdit>("Formulaire Config", parameters);
         Modal.OnClose += RefreshConfigs;
