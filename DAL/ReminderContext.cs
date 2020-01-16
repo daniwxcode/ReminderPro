@@ -16,6 +16,7 @@ namespace DAL
         protected override void OnConfiguring ( DbContextOptionsBuilder optionsBuilder )
         {
             optionsBuilder.UseSqlServer(@"Server=DESKTOP-SKIHT4L;Database=RemindDB;Trusted_Connection=True;");
+            optionsBuilder.UseLazyLoadingProxies();
         }
 
         protected override void OnModelCreating ( ModelBuilder modelBuilder )
