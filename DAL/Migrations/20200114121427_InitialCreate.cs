@@ -4,7 +4,7 @@ namespace DAL.Migrations
 {
     public partial class InitialCreate : Migration
     {
-        protected override void Up(MigrationBuilder migrationBuilder)
+        protected override void Up ( MigrationBuilder migrationBuilder )
         {
             migrationBuilder.CreateTable(
                 name: "Apis",
@@ -75,7 +75,7 @@ namespace DAL.Migrations
                 column: "EngagementID");
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
+        protected override void Down ( MigrationBuilder migrationBuilder )
         {
             migrationBuilder.DropTable(
                 name: "Configs");

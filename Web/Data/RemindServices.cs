@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using DAL;
 using DAL.Model;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace Web.Data
@@ -21,7 +22,7 @@ namespace Web.Data
 
         }
 
-        public  void Save ( Api newApi )
+        public void Save ( Api newApi )
         {
             using (var db = new ReminderContext())
             {
@@ -29,7 +30,7 @@ namespace Web.Data
                 db.SaveChanges();
             }
         }
-        public   void Delete ( Api DeletedApi )
+        public void Delete ( Api DeletedApi )
         {
             using (var db = new ReminderContext())
             {
@@ -39,7 +40,7 @@ namespace Web.Data
         }
         #endregion
         #region Engagements
-        
+
         public Task<List<Engagement>> GetEngagAsync ()
         {
             using (var db = new ReminderContext())
@@ -49,7 +50,7 @@ namespace Web.Data
 
         }
 
-        public  void SaveEngag ( Engagement newEngag )
+        public void SaveEngag ( Engagement newEngag )
         {
             using (var db = new ReminderContext())
             {
@@ -57,23 +58,23 @@ namespace Web.Data
                 db.SaveChanges();
             }
         }
-        public  void DeleteEngag ( Engagement DeletedEngag )
+        public void DeleteEngag ( Engagement DeletedEngag )
         {
             using (var db = new ReminderContext())
             {
                 db.Engagements.Remove(DeletedEngag);
-                 db.SaveChanges();
+                db.SaveChanges();
             }
         }
         #endregion
 
-         #region Configs
-        
+        #region Configs
+
         public Task<List<Configs>> GetConfigsAsync ()
         {
             using (var db = new ReminderContext())
             {
-                return Task.FromResult(db.Configs.Include(p=>p.Engagement).Include(p=>p.Api).ToList());
+                return Task.FromResult(db.Configs.Include(p => p.Engagement).Include(p => p.Api).ToList());
             }
 
         }
@@ -86,7 +87,7 @@ namespace Web.Data
                 db.SaveChanges();
             }
         }
-        public  void DeleteConfigs ( Configs DeletedConfigs )
+        public void DeleteConfigs ( Configs DeletedConfigs )
         {
             using (var db = new ReminderContext())
             {

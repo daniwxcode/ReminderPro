@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using DAL.Model;
+﻿using DAL.Model;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL
@@ -24,6 +22,6 @@ namespace DAL
         //entities
         public DbSet<Api> Apis { get; set; }
         public DbSet<Engagement> Engagements { get; set; }
-        public DbSet<Configs> Configs{get;set;}
+        public DbSet<Configs> Configs { get; set; }
     }
 }
