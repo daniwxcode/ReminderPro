@@ -132,6 +132,7 @@ Execute (@SQL)
                     DateSend = table.Column<DateTime>(nullable: false),
                     Message = table.Column<string>(nullable: true),
                     Canal = table.Column<string>(nullable: true),
+
                     ConsentementID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

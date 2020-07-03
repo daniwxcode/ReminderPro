@@ -15,7 +15,8 @@ namespace App
             int i = 1;
             foreach (var item in Service.GetEcheances(360))
             {
-                Console.WriteLine($"{i++} - {item.ToSMS()}");
+                var notification = item.ToSMS();
+                Console.WriteLine($"{ notification.Consentement.Tel} Message- {notification.Message}");
             }
 
             Console.ReadKey();
