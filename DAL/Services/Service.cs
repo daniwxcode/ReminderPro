@@ -60,5 +60,15 @@ namespace App
                 DateSend = DateTime.Now
             };
         }
+
+        public static Notification toEmail(this Echeance echeance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static async void Send(this Notification notification)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
