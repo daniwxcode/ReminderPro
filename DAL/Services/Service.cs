@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 
 using DAL;
 using DAL.Model;
+using DAL.Params;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -33,7 +34,15 @@ namespace App
             }
         }
 
-        public static string ToSMS(this Echeance echeance)
+        public static Consentement GetConcentement(this Echeance echeance)
+        {
+            using (var db = new ReminderContext())
+            {
+                return db.Consentements.FirstOrDefault(p => p.Matricule == echeance.EtcivMatricule);
+            }
+        }
+
+        public static Notification ToSMS(this Echeance echeance)
         {
             IDictionary<string, string> map = new Dictionary<string, string>()
             {
@@ -42,9 +51,24 @@ namespace App
                 {"_MONTANT_",$"{(int)echeance.EchappMontEch}"},
                 {"_SIGNATURE_",$"{AppConfigs.Signature}"},
             };
-
             var regex = new Regex(String.Join("|", map.Keys));
-            return regex.Replace(AppConfigs.Sms, m => map[m.Value]);
+            return new Notification()
+            {
+                Canal = Cannal.SMS.ToString(),
+                Message = regex.Replace(AppConfigs.Sms, m => map[m.Value]),
+                Consentement = echeance.GetConcentement(),
+                DateSend = DateTime.Now
+            };
+        }
+
+        public static Notification toEmail(this Echeance echeance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static async void Send(this Notification notification)
+        {
+            throw new NotImplementedException();
         }
     }
 }

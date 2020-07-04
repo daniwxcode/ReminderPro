@@ -12,7 +12,7 @@ namespace DAL.Model
         public int ID { get; set; }
         public DateTime DateSend { get; set; } = DateTime.UtcNow;
         public string Message { get; set; }
-
         public string Canal { get; set; }
+        public virtual Consentement Consentement { get; set; }
     }
 }
