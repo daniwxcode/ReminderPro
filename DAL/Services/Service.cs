@@ -47,7 +47,7 @@ namespace App
         {
             IDictionary<string, string> map = new Dictionary<string, string>()
             {
-                {"_DATE_",@$"DU {echeance.EchappDate.AddMonths(-1).AddDays(1).ToShortDateString()} AU  {echeance.EchappDate.ToShortDateString()} DU DOSSIER {echeance.DossierNumero}"},
+                {"_DOSSIER_",@$"{echeance.DossierNumero}"},
                 {"_DECHEANCE_",$"{echeance.EchappDate.ToShortDateString()}"},
                 {"_MONTANT_",$"{(int)echeance.EchappMontEch}"},
                 {"_SIGNATURE_",$"{AppConfig.Config()["Params:Signature"]}"},
