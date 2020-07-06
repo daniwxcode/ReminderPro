@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 
 using DAL;
+using DAL.Contracts;
+using DAL.Services;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace App
 {
@@ -12,11 +15,15 @@ namespace App
     {
         private static void Main(string[] args)
         {
-            int i = 1;
-            foreach (var item in Service.GetEcheances(360))
+            var infoBip = new InfoBipSendSmsService(AppConfig.Config());
+            foreach (var item in Service.GetEcheances())
             {
                 var notification = item.ToSMS();
-                Console.WriteLine($"{ notification.Consentement.Tel} Message- {notification.Message}");
+
+                if (infoBip.Send(notification))
+                {
+                    Console.WriteLine($"{ notification.Consentement.Tel} Message- {notification.Message}");
+                }
             }
 
             Console.ReadKey();

@@ -5,11 +5,14 @@ using System.Text;
 using DAL.Model;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace DAL
 {
     public class ReminderContext : DbContext
     {
+        private IConfiguration _configuration;
+
         public ReminderContext()
         {
             Database.Migrate();
@@ -17,8 +20,7 @@ namespace DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var App = new AppConfiguration();
-            optionsBuilder.UseSqlServer(AppConfigs.ConnectionString);
+            optionsBuilder.UseSqlServer(AppConfig.Config()["ConnectionStrings:DataConnection"]);
             optionsBuilder.UseLazyLoadingProxies(false);
         }
 
