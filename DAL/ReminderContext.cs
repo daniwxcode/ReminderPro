@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL
 {
-    public class ReminderContext : DbContext
+    public sealed class ReminderContext : DbContext
     {
         public ReminderContext()
         {
