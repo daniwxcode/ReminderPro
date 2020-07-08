@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using DAL;
 using DAL.Model;
 using DAL.Params;
+using DAL.Services;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -20,7 +21,7 @@ namespace App
             {
                 return db.Echeances.FromSqlRaw(@$"exec PROC_ECHEANCE_RELANCE '{DateTime.Today.ToShortDateString()}',
                   '{DateTime.Today.AddDays(Ecart).ToShortDateString()}',
-                  '{AppConfigs.Source}'").ToList();
+                  '{AppConfig.Config()["Params:Source"]}'").ToList();
             }
         }
 
@@ -29,8 +30,8 @@ namespace App
             using (var db = new ReminderContext())
             {
                 return db.Echeances.FromSqlRaw(@$"exec PROC_ECHEANCE_RELANCE '{DateTime.Today.ToShortDateString()}',
-                  '{DateTime.Today.AddDays(AppConfigs.Ecart).ToShortDateString()}',
-                  '{AppConfigs.Source}'").ToList();
+                  '{DateTime.Today.AddDays(Convert.ToInt32(AppConfig.Config()["Params:Ecart"])).ToShortDateString()}',
+                  '{AppConfig.Config()["Params:Source"]}'").ToList();
             }
         }
 
@@ -46,29 +47,24 @@ namespace App
         {
             IDictionary<string, string> map = new Dictionary<string, string>()
             {
-                {"_DATE_",@$"DU {echeance.EchappDate.AddMonths(-1).ToShortDateString()} AU  {echeance.EchappDate.ToShortDateString()}"},
+                {"_DOSSIER_",@$"{echeance.DossierNumero}"},
                 {"_DECHEANCE_",$"{echeance.EchappDate.ToShortDateString()}"},
                 {"_MONTANT_",$"{(int)echeance.EchappMontEch}"},
-                {"_SIGNATURE_",$"{AppConfigs.Signature}"},
+                {"_SIGNATURE_",$"{AppConfig.Config()["Params:Signature"]}"},
             };
             var regex = new Regex(String.Join("|", map.Keys));
             return new Notification()
             {
                 Canal = Cannal.SMS.ToString(),
-                Message = regex.Replace(AppConfigs.Sms, m => map[m.Value]),
+                Message = regex.Replace(AppConfig.Config()["Params:Sms"], m => map[m.Value]),
                 Consentement = echeance.GetConcentement(),
                 DateSend = DateTime.Now
             };
         }
 
-        public static Notification toEmail(this Echeance echeance)
+        public static bool Send(this InfoBipSendSmsService service, Notification notification)
         {
-            throw new NotImplementedException();
-        }
-
-        public static async void Send(this Notification notification)
-        {
-            throw new NotImplementedException();
+            return service.Send(notification.Consentement.Tel, notification.Message, AppConfig.Config()["Params:Nom"]);
         }
     }
 }
