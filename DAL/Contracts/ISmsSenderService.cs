@@ -1,8 +1,11 @@
-﻿namespace DAL.Contracts
+﻿using System.Threading.Tasks;
+
+namespace DAL.Contracts
 {
     public interface ISmsSenderService
     {
-        bool Send(string phoneNumber,string msg);
-        bool Send(string phoneNumber,string msg,string sender);
+        Task<bool> Send(string phoneNumber, string msg);
+
+        bool SendAsync(string phoneNumber, string msg, string sender);
     }
 }

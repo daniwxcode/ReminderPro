@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 using DAL;
 using DAL.Model;
@@ -62,9 +63,9 @@ namespace App
             };
         }
 
-        public static bool Send(this InfoBipSendSmsService service, Notification notification)
+        public static async Task<bool> Send(this InfoBipSendSmsService service, Notification notification)
         {
-            return service.Send(notification.Consentement.Tel, notification.Message, AppConfig.Config()["Params:Nom"]);
+            return await service.SendAsync(notification.Consentement.Tel, notification.Message, AppConfig.Config()["Params:Nom"]);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace App
             {
                 var notification = item.ToSMS();
 
-                if (infoBip.Send(notification))
+                if (infoBip.Send(notification).Result)
                 {
                     Console.WriteLine($"{ notification.Consentement.Tel} Message- {notification.Message}");
                 }
