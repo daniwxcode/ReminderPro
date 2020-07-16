@@ -17,9 +17,12 @@ namespace DAL
             return configurationBuilder.Build();
         }
 
-        public static string GetObjProperty(this object obj, string property)
+        public static string EmailTemplate()
         {
-            return obj.GetType().GetProperty("property").ToString();
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "Mail.html");
+            if (File.Exists(path))
+                return File.ReadAllText(path);
+            return string.Empty;
         }
     }
 }

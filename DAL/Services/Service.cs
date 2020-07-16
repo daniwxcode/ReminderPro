@@ -63,9 +63,44 @@ namespace App
             };
         }
 
+        public static Notification ToMail(this Echeance echeance)
+        {
+            IDictionary<string, string> map = new Dictionary<string, string>()
+            {
+                {"_NUMECH_",@$"{echeance.EchappNumero}"},
+                {"_NUMDOSSIER_",@$"{echeance.DossierNumero}"},
+                {"_NOMCLIENT_",@$"{echeance.EtcivNomreduit}"},
+                {"_MATRICULECLIENT_",@$"{echeance.EtcivMatricule}"},
+                {"_BPCLIENT_",@$""},
+                {"_ADRESSECLIENT_",@$"{echeance.EtcivAdressGeog1}"},
+                {"_DFACT_",@$"{echeance.EchappDate.AddDays(-Convert.ToInt32(AppConfig.Config()["Params:Ecart"])).ToShortDateString()}"},
+                {"_RIB_",$"{echeance.EtcivNumcptContrib}"},
+                {"_ADRESSEBANK_",$"{AppConfig.Config()["Params:Address"]}"},
+                {"_VILLEPAYS_",$"{AppConfig.Config()["Params:CityCountry"]}"},
+                {"_DFIN_",$"{echeance.EchappDate.ToShortDateString()}"},
+                {"_DDEBUT_",$"{echeance.EchappDate.AddMonths(-1).AddDays(1).ToShortDateString()}"},
+                {"_ECHEANCEPERIODE_",$" du {echeance.EchappDate.AddMonths(-1).AddDays(1).ToShortDateString()} au {echeance.EchappDate.ToShortDateString()}"},
+                {"_MONTANTECHEANCE_",$"{(int)echeance.EchappMontEch}"},
+            };
+            var regex = new Regex(String.Join("|", map.Keys));
+            return new Notification()
+            {
+                Canal = Cannal.Mail.ToString(),
+                Message = regex.Replace(AppConfig.EmailTemplate(), m => map[m.Value]),
+                Consentement = echeance.GetConcentement(),
+                DateSend = DateTime.Now
+            };
+        }
+
         public static async Task<bool> Send(this InfoBipSendSmsService service, Notification notification)
         {
             return await service.SendAsync(notification.Consentement.Tel, notification.Message, AppConfig.Config()["Params:Nom"]);
+        }
+
+        public static async Task SendMail(this SendGridEmailSenderService service, Notification notification)
+        {
+            var emails = notification.Consentement.Mail.Split(';').ToList();
+            await service.SendEmailAsync(emails, "FACTURE", notification.Message);
         }
     }
 }
