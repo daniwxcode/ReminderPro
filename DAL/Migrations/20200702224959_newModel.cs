@@ -158,7 +158,7 @@ Execute (@SQL)
                 name: "Echeances");
 
             migrationBuilder.DropTable(
-                name: "Notification");
+                name: "Notifications");
 
             migrationBuilder.DropTable(
                 name: "Consentements");

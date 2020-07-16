@@ -32,5 +32,6 @@ namespace DAL
 
         public DbSet<Consentement> Consentements { get; set; }
         public DbSet<Echeance> Echeances { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
     }
 }
