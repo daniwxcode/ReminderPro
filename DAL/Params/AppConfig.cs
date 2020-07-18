@@ -16,10 +16,5 @@ namespace DAL
             configurationBuilder.AddJsonFile(path, false);
             return configurationBuilder.Build();
         }
-
-        public static string GetObjProperty(this object obj, string property)
-        {
-            return obj.GetType().GetProperty("property").ToString();
-        }
     }
 }

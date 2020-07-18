@@ -29,9 +29,10 @@ namespace App
         {
             using (var db = new ReminderContext())
             {
-                return db.Echeances.FromSqlRaw(@$"exec PROC_ECHEANCE_RELANCE '{DateTime.Today.ToShortDateString()}',
+                string sql = @$"exec PROC_ECHEANCE_RELANCE '{DateTime.Today.ToShortDateString()}',
                   '{DateTime.Today.AddDays(Convert.ToInt32(AppConfig.Config()["Params:Ecart"])).ToShortDateString()}',
-                  '{AppConfig.Config()["Params:Source"]}'").ToList();
+                  '{AppConfig.Config()["Params:Source"]}'";
+                return db.Echeances.FromSqlRaw(sql).ToList();
             }
         }
 

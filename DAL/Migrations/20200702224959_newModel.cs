@@ -148,7 +148,7 @@ Execute (@SQL)
 
             migrationBuilder.CreateIndex(
                 name: "IX_Notification_ConsentementID",
-                table: "Notification",
+                table: "Notifications",
                 column: "ConsentementID");
         }
 

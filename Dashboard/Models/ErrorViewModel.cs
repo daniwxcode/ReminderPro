@@ -1,6 +1,6 @@
 using System;
 
-namespace CreativeTim.Argon.DotNetCore.Free.Models
+namespace Dashboard.Models
 {
     public class ErrorViewModel
     {

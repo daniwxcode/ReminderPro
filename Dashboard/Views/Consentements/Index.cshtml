@@ -1,0 +1,90 @@
+﻿@model IEnumerable<DAL.Model.Consentement>
+@section css {
+    <!-- Custom styles for this page -->
+    <link href="~/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+}
+@{
+    ViewData["Title"] = "Liste des Consentements";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+       
+        <a asp-action="Create" class="btn btn-success btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-user-plus"></i>
+            </span><span class="text font-weight-bold">Enregistrer un Nouveau Consentement</span>
+            <h6 class=""></h6>
+        </a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Matricule)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nom)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Tel)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mail)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Matricule)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nom)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Tel)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Mail)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-secondary btn-icon-split">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-edit"></i>
+                                    </span><span class="text">Modifier</span>
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-info btn-icon-split">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-file-alt"></i>
+                                    </span><span class="text">Details</span>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger btn-icon-split">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-trash"></i>
+                                    </span><span class="text">Supprimer</span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Page level plugins -->
+    <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="~/js/demo/datatables-demo.js"></script>
+
+}
