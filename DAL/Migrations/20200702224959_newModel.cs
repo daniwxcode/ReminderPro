@@ -124,7 +124,7 @@ Execute (@SQL)
                 });
 
             migrationBuilder.CreateTable(
-                name: "Notification",
+                name: "Notifications",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)

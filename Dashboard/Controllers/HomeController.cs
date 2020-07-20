@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Dashboard.Models;
@@ -32,6 +33,23 @@ namespace Dashboard.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Settings()
+        {
+            var model = new AppSettingsParser(AppConfig.Config).GetAppSettings();
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Settings(AppSettings model)
+        {
+            if (ModelState.IsValid)
+            {
+                AppSettingsParser.SetAppSettingValue(model);
+            }
+
+            return View(model);
         }
     }
 }

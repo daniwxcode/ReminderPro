@@ -21,7 +21,7 @@ namespace App
             {
                 return db.Echeances.FromSqlRaw(@$"exec PROC_ECHEANCE_RELANCE '{DateTime.Today.ToShortDateString()}',
                   '{DateTime.Today.AddDays(Ecart).ToShortDateString()}',
-                  '{AppConfig.Config()["Params:Source"]}'").ToList();
+                  '{AppConfig.Source}'").ToList();
             }
         }
 
@@ -30,8 +30,8 @@ namespace App
             using (var db = new ReminderContext())
             {
                 string sql = @$"exec PROC_ECHEANCE_RELANCE '{DateTime.Today.ToShortDateString()}',
-                  '{DateTime.Today.AddDays(Convert.ToInt32(AppConfig.Config()["Params:Ecart"])).ToShortDateString()}',
-                  '{AppConfig.Config()["Params:Source"]}'";
+                  '{DateTime.Today.AddDays(AppConfig.Ecart).ToShortDateString()}',
+                  '{AppConfig.Source}'";
                 return db.Echeances.FromSqlRaw(sql).ToList();
             }
         }
@@ -51,13 +51,13 @@ namespace App
                 {"_DOSSIER_",@$"{echeance.DossierNumero}"},
                 {"_DECHEANCE_",$"{echeance.EchappDate.ToShortDateString()}"},
                 {"_MONTANT_",$"{(int)echeance.EchappMontEch}"},
-                {"_SIGNATURE_",$"{AppConfig.Config()["Params:Signature"]}"},
+                {"_SIGNATURE_",$"{AppConfig.Signature}"}
             };
             var regex = new Regex(String.Join("|", map.Keys));
             return new Notification()
             {
                 Canal = Cannal.SMS.ToString(),
-                Message = regex.Replace(AppConfig.Config()["Params:Sms"], m => map[m.Value]),
+                Message = regex.Replace(AppConfig.Sms, m => map[m.Value]),
                 Consentement = echeance.GetConcentement(),
                 DateSend = DateTime.Now
             };
@@ -65,7 +65,7 @@ namespace App
 
         public static bool Send(this InfoBipSendSmsService service, Notification notification)
         {
-            return service.Send(notification.Consentement.Tel, notification.Message, AppConfig.Config()["Params:Nom"]);
+            return service.Send(notification.Consentement.Tel, notification.Message, AppConfig.Nom);
         }
     }
 }

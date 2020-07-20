@@ -20,7 +20,7 @@ namespace DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(AppConfig.Config()["ConnectionStrings:DataConnection"]);
+            optionsBuilder.UseSqlServer(AppConfig.Config["ConnectionStrings:DataConnection"]);
             optionsBuilder.UseLazyLoadingProxies(false);
         }
 

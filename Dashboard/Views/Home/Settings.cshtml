@@ -1,0 +1,86 @@
+﻿@model Dashboard.Models.AppSettings
+
+@{
+    ViewData["Title"] = "Setttings";
+}
+<form asp-action="Settings">
+    <div class="card shadow mb-auto">
+        <div class="card-header py-3">
+
+            <h6 class="m-0 font-weight-bold text-primary">Paramètres de l'Applications</h6>
+        </div>
+        <div class="card-body">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="SourceDB" class="control-label"></label>
+                        <input asp-for="SourceDB" class="form-control" />
+                        <span asp-validation-for="SourceDB" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DaysEcart" class="control-label"></label>
+                        <input asp-for="DaysEcart" class="form-control" />
+                        <span asp-validation-for="DaysEcart" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="InstitutionName" class="control-label"></label>
+                        <input asp-for="InstitutionName" class="form-control" />
+                        <span asp-validation-for="InstitutionName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Signature" class="control-label"></label>
+                        <input asp-for="Signature" class="form-control" />
+                        <span asp-validation-for="Signature" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="ApiUrl" class="control-label"></label>
+                        <input asp-for="ApiUrl" class="form-control" />
+                        <span asp-validation-for="ApiUrl" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="User" class="control-label"></label>
+                        <input asp-for="User" class="form-control" />
+                        <span asp-validation-for="User" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Sender" class="control-label"></label>
+                        <input asp-for="Sender" class="form-control" />
+                        <span asp-validation-for="Sender" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CountryCode" class="control-label"></label>
+                        <input asp-for="CountryCode" class="form-control" />
+                        <span asp-validation-for="CountryCode" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer py-3">
+            <div class="form-group">
+            </div>
+            <span class="btn btn-success btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-save"></i>
+                </span><input type="submit" value="Enregistrer" class="btn btn-success" />
+            </span>
+            <span class="btn btn-danger btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-recycle"></i>
+                </span><input type="reset" value="Annuler" class="btn btn-danger" />
+            </span>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

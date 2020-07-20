@@ -35,7 +35,7 @@ namespace Dashboard.Controllers
 
         private void DoWork(object state)
         {
-            var infoBip = new InfoBipSendSmsService(AppConfig.Config());
+            var infoBip = new InfoBipSendSmsService(AppConfig.Config);
 
             var liste = Service.GetEcheances();
             using (var _context = new ReminderContext())
