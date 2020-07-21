@@ -15,18 +15,24 @@ namespace App
     {
         private static void Main(string[] args)
         {
-            var smsService = new InfoBipSendSmsService(AppConfig.Config());
-            var mailService = new SendGridEmailSenderService(AppConfig.Config());
-            foreach (var item in Service.GetEcheances())
-            {
-                //  var notification = item.ToSMS();
-                var mail = item.ToMail();
-                mailService.SendMail(mail);
-                //if (smsService.Send(notification).Result)
-                //{
-                //    Console.WriteLine($"{ notification.Consentement.Tel} Message- {notification.Message}");
-                //}
-            }
+            //            var smsService = new InfoBipSendSmsService(AppConfig.Config());
+            //            var mailService = new SendGridEmailSenderService(AppConfig.Config());
+            //            foreach (var item in Service.GetEcheances())
+            //            {
+            //                //  var notification = item.ToSMS();
+            //                var mail = item.ToMail();
+            //                mailService.SendMail(mail);
+            //                //if (smsService.Send(notification).Result)
+            //                //{
+            //                //    Console.WriteLine($"{ notification.Consentement.Tel} Message- {notification.Message}");
+            //                //}
+            //            }
+
+
+//            Console.WriteLine(MailgunEmailSenderService.SendSimpleMessage().Content.ToString());
+            MailgunEmailSenderService.SendEmailAsync(new List<string>() {"lenepalu@gmail.com"}, "Hello2",
+                "<h1>Test <br/> async</h1>").Wait();
+            
 
             Console.ReadKey();
         }

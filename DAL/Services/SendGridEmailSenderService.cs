@@ -35,7 +35,7 @@ namespace DAL.Services
             return Execute(_configuration["SendGrid:ApiKey"], subject, message, emails);
         }
 
-        public Task Execute(string apiKey, string subject, string message, List<string> emails)
+        public static Task Execute(string apiKey, string subject, string message, List<string> emails)
         {
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
@@ -47,10 +47,14 @@ namespace DAL.Services
                 HtmlContent = message
             };
 
-            foreach (var email in emails)
+            if (emails != null)
             {
-                msg.AddTo(new EmailAddress(email));
+                foreach (var email in emails)
+                {
+                    msg.AddTo(new EmailAddress(email));
+                }
             }
+           
 
             Task response = client.SendEmailAsync(msg);
             return response;
