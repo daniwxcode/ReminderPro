@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,6 +10,8 @@ using DAL.Services;
 
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+
+using Services.Services;
 
 namespace Services.TimerServices
 {
@@ -41,6 +44,8 @@ namespace Services.TimerServices
                 foreach (var item in liste)
                 {
                     var notification = item.ToSMS();
+                    MailgunEmailSenderService.SendEmailAsync(new List<string>() { "daniwx@gmail.com" }, "Hello2",
+                        "<h1>Test <br/> async</h1>").Wait();
 
                     if (infoBip.Send(notification))
                     {

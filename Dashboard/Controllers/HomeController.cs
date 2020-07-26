@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Dashboard.Models;
 using Services;
+using System.IO;
+using Services.Services;
 
 namespace Dashboard.Controllers
 {
@@ -64,7 +66,18 @@ namespace Dashboard.Controllers
 
             var Renderer = new IronPdf.HtmlToPdf();
             var PDF = Renderer.RenderUrlAsPdf(url);
-            PDF.Password = Service.Echeances[i].DossierNumero;
+            var ech = Service.Echeances[i];
+            PDF.Password = ech.EtcivMatricule;
+            var filename = @$"wwwroot\EcheancesPdf\{ech.DossierNumero}-{ech.EchappNumero.Trim()}.PDF";
+            PDF.SaveAs(filename);
+            var fullPath = Path.GetFullPath(filename);
+
+            MailgunEmailSenderService.SendEmailAsync(new List<string>() { "daniwx@gmail.com" }, "Facture Echeance",
+                "<h1>Test <br/> async</h1>").Wait();
+
+            MailgunEmailSenderService.SendEmailAsync(new List<string>() { "daniwx@gmail.com" }, "Facture Echeance",
+                "<h1>Test <br/> async</h1>", fullPath).Wait();
+
             return File(PDF.BinaryData, "application/pdf;");
         }
     }

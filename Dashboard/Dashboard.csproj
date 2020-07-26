@@ -34,4 +34,8 @@
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio 14.0\IRONPDF\IronPdf.dll</HintPath>
     </Reference>
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\EcheancesPdf\" />
+  </ItemGroup>
 </Project>
