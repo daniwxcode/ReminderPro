@@ -1,0 +1,13 @@
+{
+  "DataConnection": "Server=DESKTOP-SKIHT4L;Database=Reminder;Trusted_Connection=True;",
+  "SourceDB": "DB_ALT_PROD",
+  "InstitutionName": "",
+  "Ecart": "15",
+  "ApiUrl": "http://api.infobip.com/api/v3/sendsms/",
+  "User": "lenepalu01",
+  "Password": "Lpk@2020",
+  "Sender": "RiminderPro",
+  "CountryCode": "228",
+  "Signature": "",
+  "Sms": "CHER CLIENT UN LOYER DE VOTRE DOSSIER _DOSSIER_ ARRIVE A ECHEANCE CE _DECHEANCE_. LE MONTANT DE VOTRE FACTURE S'ELEVE A _MONTANT_ FCFA."
+}

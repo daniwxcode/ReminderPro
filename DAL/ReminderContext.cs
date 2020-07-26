@@ -20,7 +20,9 @@ namespace DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(AppConfig.Config["ConnectionStrings:DataConnection"]);
+            //AppSettingsParser.AppSettings();
+            //  optionsBuilder.UseSqlServer(AppSettingsParser.Settings.DataConnection);
+            optionsBuilder.UseSqlServer("Server=DESKTOP-SKIHT4L;Database=Reminder;Trusted_Connection=True;");
             optionsBuilder.UseLazyLoadingProxies(false);
         }
 
@@ -33,5 +35,6 @@ namespace DAL
         public DbSet<Consentement> Consentements { get; set; }
         public DbSet<Echeance> Echeances { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<TraitementRelevés> TraitementRelevés { get; set; }
     }
 }

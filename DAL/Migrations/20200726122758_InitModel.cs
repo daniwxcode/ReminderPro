@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.Migrations
 {
-    public partial class newModel : Migration
+    public partial class InitModel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -83,16 +83,15 @@ Execute (@SQL)
 ";
 
             migrationBuilder.Sql(sp);
-
             migrationBuilder.CreateTable(
                 name: "Consentements",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Matricule = table.Column<string>(nullable: true),
-                    Nom = table.Column<string>(nullable: true),
-                    Tel = table.Column<string>(nullable: true),
+                    Matricule = table.Column<string>(nullable: false),
+                    Nom = table.Column<string>(nullable: false),
+                    Tel = table.Column<string>(nullable: false),
                     Mail = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -105,13 +104,13 @@ Execute (@SQL)
                 columns: table => new
                 {
                     DossierNumero = table.Column<string>(nullable: false),
+                    EchappNumero = table.Column<string>(nullable: true),
                     LibelleEngagement = table.Column<string>(nullable: true),
                     EtcivMatricule = table.Column<string>(nullable: true),
                     EtcivNomreduit = table.Column<string>(nullable: true),
-                    EtcivTelephone = table.Column<string>(nullable: false),
+                    EtcivTelephone = table.Column<string>(nullable: true),
                     EtcivAdressGeog1 = table.Column<string>(nullable: true),
                     EtcivNumcptContrib = table.Column<string>(nullable: true),
-                    EchappNumero = table.Column<string>(nullable: true),
                     EchappDate = table.Column<DateTime>(nullable: false),
                     EchappMontCapital = table.Column<decimal>(nullable: false),
                     EchappMontTaxe = table.Column<decimal>(nullable: false),
@@ -132,14 +131,15 @@ Execute (@SQL)
                     DateSend = table.Column<DateTime>(nullable: false),
                     Message = table.Column<string>(nullable: true),
                     Canal = table.Column<string>(nullable: true),
-
+                    Dossier = table.Column<string>(nullable: true),
+                    Echeance = table.Column<string>(nullable: true),
                     ConsentementID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Notification", x => x.ID);
+                    table.PrimaryKey("PK_Notifications", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Notification_Consentements_ConsentementID",
+                        name: "FK_Notifications_Consentements_ConsentementID",
                         column: x => x.ConsentementID,
                         principalTable: "Consentements",
                         principalColumn: "ID",
@@ -147,7 +147,7 @@ Execute (@SQL)
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Notification_ConsentementID",
+                name: "IX_Notifications_ConsentementID",
                 table: "Notifications",
                 column: "ConsentementID");
         }

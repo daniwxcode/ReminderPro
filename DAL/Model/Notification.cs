@@ -19,6 +19,8 @@ namespace DAL.Model
         public string Message { get; set; }
 
         public string Canal { get; set; }
+        public string Dossier { get; set; }
+        public string Echeance { get; set; }
         public virtual Consentement Consentement { get; set; }
     }
 }

@@ -11,6 +11,9 @@ namespace DAL.Model
         [JsonProperty("DOSSIER_NUMERO")]
         public string DossierNumero { get; set; }
 
+        [JsonProperty("ECHAPP_NUMERO")]
+        public string EchappNumero { get; set; }
+
         [JsonProperty("LIBELLE_ENGAGEMENT")]
         public string LibelleEngagement { get; set; }
 
@@ -28,9 +31,6 @@ namespace DAL.Model
 
         [JsonProperty("ETCIV_NUMCPT_CONTRIB")]
         public string EtcivNumcptContrib { get; set; }
-
-        [JsonProperty("ECHAPP_NUMERO")]
-        public string EchappNumero { get; set; }
 
         [JsonProperty("ECHAPP_DATE")]
         public DateTime EchappDate { get; set; }

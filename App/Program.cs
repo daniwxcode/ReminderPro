@@ -15,7 +15,7 @@ namespace App
     {
         private static void Main(string[] args)
         {
-            var infoBip = new InfoBipSendSmsService(AppConfig.Config());
+            var infoBip = new InfoBipSendSmsService(.Config());
             foreach (var item in Service.GetEcheances())
             {
                 var notification = item.ToSMS();

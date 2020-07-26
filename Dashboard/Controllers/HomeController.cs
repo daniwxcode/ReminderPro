@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using App;
 using DAL;
+using DAL.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Dashboard.Models;
+using Services;
 
 namespace Dashboard.Controllers
 {
@@ -37,8 +40,7 @@ namespace Dashboard.Controllers
 
         public IActionResult Settings()
         {
-            var model = new AppSettingsParser(AppConfig.Config).GetAppSettings();
-            return View(model);
+            return View(AppSettingsParser.Settings);
         }
 
         [HttpPost]
@@ -46,10 +48,24 @@ namespace Dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                AppSettingsParser.SetAppSettingValue(model);
+                AppSettingsParser.AppSettings(model);
             }
 
             return View(model);
+        }
+
+        public IActionResult Facture()
+        {
+            Service.Echeances = Service.GetEcheances(300);
+            if (Service.Echeances.Count == 0)
+                return null;
+            int i = 0;
+            var url = Url.ActionLink("Details", "Echeances", new { id = i });
+
+            var Renderer = new IronPdf.HtmlToPdf();
+            var PDF = Renderer.RenderUrlAsPdf(url);
+            PDF.Password = Service.Echeances[i].DossierNumero;
+            return File(PDF.BinaryData, "application/pdf;");
         }
     }
 }

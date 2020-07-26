@@ -10,37 +10,16 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ReminderContext))]
-    [Migration("20200702224959_newModel")]
-    partial class newModel
+    [Migration("20200726122758_InitModel")]
+    partial class InitModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.1")
+                .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("DAL.Model.Configs", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Bd")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ChaineDeConnection")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Requette")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Configs");
-                });
 
             modelBuilder.Entity("DAL.Model.Consentement", b =>
                 {
@@ -53,12 +32,15 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Matricule")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nom")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tel")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
@@ -71,20 +53,20 @@ namespace DAL.Migrations
                     b.Property<string>("DossierNumero")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTimeOffset>("EchappDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("EchappDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTimeOffset>("EchappDateTombEche")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("EchappDateTombEche")
+                        .HasColumnType("datetime2");
 
-                    b.Property<double>("EchappMontCapital")
-                        .HasColumnType("float");
+                    b.Property<decimal>("EchappMontCapital")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<double>("EchappMontEch")
-                        .HasColumnType("float");
+                    b.Property<decimal>("EchappMontEch")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<double>("EchappMontTaxe")
-                        .HasColumnType("float");
+                    b.Property<decimal>("EchappMontTaxe")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("EchappNumero")
                         .HasColumnType("nvarchar(max)");
@@ -101,8 +83,8 @@ namespace DAL.Migrations
                     b.Property<string>("EtcivNumcptContrib")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("EtcivTelephone")
-                        .HasColumnType("bigint");
+                    b.Property<string>("EtcivTelephone")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LibelleEngagement")
                         .HasColumnType("nvarchar(max)");
@@ -128,6 +110,12 @@ namespace DAL.Migrations
                     b.Property<DateTime>("DateSend")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Dossier")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Echeance")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Message")
                         .HasColumnType("nvarchar(max)");
 
@@ -135,12 +123,12 @@ namespace DAL.Migrations
 
                     b.HasIndex("ConsentementID");
 
-                    b.ToTable("Notification");
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("DAL.Model.Notification", b =>
                 {
-                    b.HasOne("DAL.Model.Consentement", null)
+                    b.HasOne("DAL.Model.Consentement", "Consentement")
                         .WithMany("Notifications")
                         .HasForeignKey("ConsentementID");
                 });

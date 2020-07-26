@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using DAL;
+using DAL.Model;
 using DAL.Services;
 
 using Dashboard.Controllers;
@@ -14,6 +15,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
+using Services;
+using Services.TimerServices;
 
 namespace Dashboard
 {
@@ -29,10 +33,12 @@ namespace Dashboard
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            AppSettingsParser.AppSettings();
             services.AddControllersWithViews();
+            services.AddSingleton<AppSettings>();
             services.AddSingleton<ReminderContext>();
             services.AddSingleton<InfoBipSendSmsService>();
-            services.AddHostedService<TimedHostedService>();
+            services.AddHostedService<LeasingTimedHostedService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

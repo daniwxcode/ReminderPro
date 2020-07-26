@@ -1,4 +1,4 @@
-﻿@model Dashboard.Models.AppSettings
+﻿@model DAL.Model.AppSettings
 
 @{
     ViewData["Title"] = "Setttings";
@@ -19,15 +19,25 @@
                         <input asp-for="SourceDB" class="form-control" />
                         <span asp-validation-for="SourceDB" class="text-danger"></span>
                     </div>
+                    <div class="hide">
+                        <label asp-for="DataConnection" class="control-label"></label>
+                        <input asp-for="DataConnection" class="form-control" />
+                        <span asp-validation-for="DataConnection" class="text-danger"></span>
+                    </div>
                     <div class="form-group">
-                        <label asp-for="DaysEcart" class="control-label"></label>
-                        <input asp-for="DaysEcart" class="form-control" />
-                        <span asp-validation-for="DaysEcart" class="text-danger"></span>
+                        <label asp-for="Ecart" class="control-label"></label>
+                        <input asp-for="Ecart" class="form-control" />
+                        <span asp-validation-for="Ecart" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="InstitutionName" class="control-label"></label>
                         <input asp-for="InstitutionName" class="form-control" />
                         <span asp-validation-for="InstitutionName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Sms" class="control-label"></label>
+                        <input asp-for="Sms" class="form-control" />
+                        <span asp-validation-for="Sms" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Signature" class="control-label"></label>

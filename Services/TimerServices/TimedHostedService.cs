@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,14 +10,14 @@ using DAL.Services;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Dashboard.Controllers
+namespace Services.TimerServices
 {
-    public class TimedHostedService : IHostedService, IDisposable
+    public class LeasingTimedHostedService : IHostedService, IDisposable
     {
         private readonly ILogger _logger;
         private Timer _timer;
 
-        public TimedHostedService(ILogger<TimedHostedService> logger)
+        public LeasingTimedHostedService(ILogger<LeasingTimedHostedService> logger)
         {
             _logger = logger;
         }
@@ -35,7 +33,7 @@ namespace Dashboard.Controllers
 
         private void DoWork(object state)
         {
-            var infoBip = new InfoBipSendSmsService(AppConfig.Config);
+            var infoBip = new InfoBipSendSmsService(AppSettingsParser.Settings);
 
             var liste = Service.GetEcheances();
             using (var _context = new ReminderContext())

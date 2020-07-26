@@ -1,21 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Dashboard.Models
+namespace Services
 {
     public class AppSettings
     {
+        public string DataConnection { get; set; }
+
         [Required(ErrorMessage = "La source de données doit être renseignée")]
         public string SourceDB { get; set; }
 
-        public int DaysEcart { get; set; }
+        public int Ecart { get; set; }
 
         [Required(ErrorMessage = "Le Nom de de la stucture doit être renseigné")]
         public string InstitutionName { get; set; }
+
+        [Required(ErrorMessage = "Le Model SMS doit être fourni")]
+        public string Sms { get; set; }
 
         public string Signature { get; set; }
 
@@ -33,5 +34,9 @@ namespace Dashboard.Models
 
         [Required(ErrorMessage = "Le code Pays doit être fourni")]
         public string CountryCode { get; set; }
+
+        public AppSettings()
+        {
+        }
     }
 }
